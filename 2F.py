@@ -62,7 +62,7 @@ for t in range(500):
     if (r < 0.5):
         kfl_random.Step(np.asmatrix(x_f_n[t, [0,2]]).T)
     else:
-        kfl_random.Step(np.asmatrix(x_f_n[max(0, t-1), [0,2]]).T)
+        kfl_random.Step(np.asmatrix(np.zeros((0,0))))
     if (t == 0):
         estimate_random = kfl_random.GetCurrentState()
     else:
