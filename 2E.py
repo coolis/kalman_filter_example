@@ -36,14 +36,13 @@ x_f = np.asmatrix(x_f)
 x_f_n = x1_n+x2_n+x3_n
 x_f_n = np.asmatrix(x_f_n)
 
-# ===============================================
-# Task 2 Kalman Filter
+# E. reduce error rate
 #initial values
 A = [[1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 1, 1], [0, 0, 0, 1]]
 B = [[0.5, 0], [1, 0], [0, 0.5], [0, 1]]
 H = [[1, 0, 0, 0], [0, 0, 1, 0]]
-x = [0, 300, 0, 0]
-P = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+x = [0, -100, 0, -100]
+P = [[0, 0, 0, 0], [0, 10000, 0, 0], [0, 0, 0, 0], [0, 0, 0, 10000]]
 Q = np.asmatrix([[0.3**2, 0], [0, 0.3**2]])
 R = np.asmatrix([[1000**2, 0], [0, 1000**2]])
 kfl = kalman_filter.KalmanFilterLinear(np.asmatrix(A), np.asmatrix(B), np.asmatrix(H), np.asmatrix(x).T, np.asmatrix(P), Q, R)
@@ -55,25 +54,23 @@ for t in range(500):
     else:
         estimate = np.concatenate((estimate, kfl.GetCurrentState()), axis=1)
 
-# A. Plot the trajectories
-# estimated trajectory, raw measurement, and true trajectory
 fig = plt.figure()
-plt.title("2A. Plot of estimated trajectory, raw measurement, and true trajectory")
+plt.title("2E.Optimal Plot of estimated trajectory, raw measurement, and true trajectory")
 plt.ylabel("x")
 plt.xlabel("y")
 plt.plot(estimate[0, :].T, estimate[2, :].T)
 plt.plot(x_f[:, 0], x_f[:, 2])
 plt.plot(x_f_n[:, 0], x_f_n[:, 2])
-fig.savefig(os.path.join(baseDir, 'Figures/2A. Estimated measurement and true trajectory.png'))
+fig.savefig(os.path.join(baseDir, 'Figures/2E. Optimal Estimated measurement and true trajectory.png'))
 
 # error rate
-for t in range(500):
-    if t == 0:
-        error = x_f_n[t] - estimate.T[t]
-    else:
-        error = np.concatenate((error, x_f_n[t] - estimate.T[t]), axis=0)
-
-utils.line(np.matrix(np.arange(500)).T, error[:, 0], "time", "error X", "2A. Error of Trajectory X")
-utils.line(np.matrix(np.arange(500)).T, error[:, 1], "time", "error X velocity", "2A. Error of X Velocity")
-utils.line(np.matrix(np.arange(500)).T, error[:, 2], "time", "error Y", "2A. Error of Trajectory Y")
-utils.line(np.matrix(np.arange(500)).T, error[:, 3], "time", "error Y velocity", "2A. Error of Y Velocity")
+#for t in range(500):
+#    if t == 0:
+#        error = x_f_n[t] - estimate.T[t]
+#    else:
+#        error = np.concatenate((error, x_f_n[t] - estimate.T[t]), axis=0)
+#
+#utils.line(np.matrix(np.arange(500)).T, error[:, 0], "time", "error X", "2C. Optimal Error of Trajectory X")
+#utils.line(np.matrix(np.arange(500)).T, error[:, 1], "time", "error X velocity", "2C. Optimal Error of X Velocity")
+#utils.line(np.matrix(np.arange(500)).T, error[:, 2], "time", "error Y", "2C. Optimal Error of Trajectory Y")
+#utils.line(np.matrix(np.arange(500)).T, error[:, 3], "time", "error Y velocity", "2C. Optimal Error of Y Velocity")
