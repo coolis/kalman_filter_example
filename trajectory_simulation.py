@@ -15,7 +15,7 @@ def trajectory_simulation(x, y, vx, vy, ax, ay, T):
 def trajectory_simulation_noise(x, y, vx, vy, ax, ay, T):
     x_t_noise = []
     for t in range(T):
-        x_t_noise.append([x+vx*t+0.5*ax*t**2, vx+ax*t, y+vy*t+0.5*ay*t**2, vy+ay*t] + np.random.normal(0, 1000**0.5, 4))
+        x_t_noise.append([x+vx*t+0.5*ax*t**2, vx+ax*t, y+vy*t+0.5*ay*t**2, vy+ay*t] + np.random.normal(0, 1000, 4))
     return x_t_noise
 
 # ===========================================
@@ -39,9 +39,15 @@ x_f_n = np.asmatrix(x_f_n)
 # 2. Plot the trajectories
 
 # with noise
-utils.line(x_f[:,0], x_f[:, 2], "x", "y", "ground-truth trajectory without noise")
+utils.line(x_f[:,0], x_f[:, 2], "x", "y", "Plot of ground-truth trajectory")
 
 # without noise
-utils.line(x_f_n[:,0], x_f_n[:, 2], "x", "y", "ground-truth trajectory with noise")
+fig = plt.figure()
+plt.title("Plot of ground-truth and measurement")
+plt.ylabel("y")
+plt.xlabel("x")
+plt.plot(x_f[:, 0], x_f[:, 2])
+plt.plot(x_f_n[:, 0], x_f_n[:, 2])
+fig.savefig(os.path.join(baseDir, 'Figures/Plot of ground-truth and measurement.png'))
 utils.line(np.arange(500), x_f_n[:,1], "time", "velocity", "velocity of x")
 utils.line(np.arange(500), x_f_n[:,3], "time", "velocity", "velocity of y")

@@ -70,8 +70,8 @@ for t in range(500):
 
 fig = plt.figure()
 plt.title("2F.Plot of estimated trajectory, raw measurement, and true trajectory")
-plt.ylabel("x")
-plt.xlabel("y")
+plt.ylabel("y")
+plt.xlabel("x")
 plt.plot(estimate[0, :].T, estimate[2, :].T)
 plt.plot(estimate_random[0, :].T, estimate_random[2, :].T)
 plt.plot(x_f[:, 0], x_f[:, 2])

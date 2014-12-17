@@ -59,8 +59,8 @@ for t in range(500):
 # estimated trajectory, raw measurement, and true trajectory
 fig = plt.figure()
 plt.title("2A. Plot of estimated trajectory, raw measurement, and true trajectory")
-plt.ylabel("x")
-plt.xlabel("y")
+plt.ylabel("y")
+plt.xlabel("x")
 plt.plot(estimate[0, :].T, estimate[2, :].T)
 plt.plot(x_f[:, 0], x_f[:, 2])
 plt.plot(x_f_n[:, 0], x_f_n[:, 2])
